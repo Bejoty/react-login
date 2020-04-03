@@ -10,21 +10,65 @@ export const userActions = {
 };
 
 function login(username, password) {
-    // return the promise using fetch which adds to localstorage on resolve
-
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
     function success(user) { return { type: userConstants.LOGIN_SUCCESS, user } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+
+    return function(dispatch) {
+        dispatch(request({username, password}));
+        return userService.login(username, password)
+            .then((loggedInUser) => {
+                dispatch(success(loggedInUser));
+
+                // Save user session
+                localStorage.setItem('user', JSON.stringify(loggedInUser));
+
+                // Redirect to home page upon successful login
+                history.push("/");
+            })
+            .catch((error) => {
+                dispatch(failure(error));
+
+                // Alert the user of the error
+                dispatch(alertActions.error(`Error: ${error}`));
+                setTimeout(() => dispatch(alertActions.clear()), 5000);
+            });
+    }
 }
 
 function logout() {
-    // complete this function
+    userService.logout();
+
+    return {
+        type: userConstants.LOGOUT,
+    };
 }
 
 function register(user) {
-    // return the promise using fetch which dispatches appropriately 
-
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }
     function success(user) { return { type: userConstants.REGISTER_SUCCESS, user } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+
+    return function(dispatch) {
+        dispatch(request(user));
+
+        return userService.register(user)
+            .then((registeredUser) => {
+                dispatch(success(registeredUser));
+
+                // Alert the user of successful registration
+                dispatch(alertActions.success('Registration successful'));
+                setTimeout(() => dispatch(alertActions.clear()), 5000);
+
+                // Redirect to login screen upon successful registration
+                history.push("/login");
+            })
+            .catch((error) => {
+                dispatch(failure(error));
+
+                // Alert the user of the error
+                dispatch(alertActions.error(`Error: ${error}`));
+                setTimeout(() => dispatch(alertActions.clear()), 5000);
+            });
+    }
 }
