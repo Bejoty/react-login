@@ -4,6 +4,12 @@ export const userService = {
     register
 };
 
+/**
+ * Calls the authentication API with the given user and returns the response.
+ * @param username
+ * @param password
+ * @returns {Promise<Response>}
+ */
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
@@ -11,15 +17,21 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    // call `/users/authenticate` with requestOptions to authenticate the login process
-    
+    return fetch('/users/authenticate', requestOptions).then(handleResponse);
 }
 
+/**
+ * Logs the user out from the current session.
+ */
 function logout() {
-    // remove user from local storage to log user out
+    localStorage.removeItem('user');
 }
 
-
+/**
+ * Calls the registration API with the given user and returns the response.
+ * @param user - The user to register
+ * @returns {Promise<Response>}
+ */
 function register(user) {
     const requestOptions = {
         method: 'POST',
@@ -30,7 +42,12 @@ function register(user) {
     return fetch('/users/register', requestOptions).then(handleResponse);
 }
 
-
+/**
+ * Handles the API response by returning a JSON object upon a successful request,
+ * and otherwise returns a rejected Promise object with the error message.
+ * @param response - API response object
+ * @returns {Promise<never>|{username: string}|{id: *, username}|{}|any|Promise<any>}
+ */
 function handleResponse(response) {
     if (!response.ok) {
         return Promise.reject(response.statusText);
