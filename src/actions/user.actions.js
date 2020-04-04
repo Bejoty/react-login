@@ -20,9 +20,6 @@ function login(username, password) {
             .then((loggedInUser) => {
                 dispatch(success(loggedInUser));
 
-                // Save user session
-                localStorage.setItem('user', JSON.stringify(loggedInUser));
-
                 // Redirect to home page upon successful login
                 history.push("/");
             })

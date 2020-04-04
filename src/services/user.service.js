@@ -17,7 +17,15 @@ function login(username, password) {
         body: JSON.stringify({ username, password })
     };
 
-    return fetch('/users/authenticate', requestOptions).then(handleResponse);
+    return fetch('/users/authenticate', requestOptions)
+        .then((response) => {
+            const loggedInUser = handleResponse(response);
+
+            // Save user session
+            localStorage.setItem('user', JSON.stringify(loggedInUser));
+
+            return loggedInUser;
+        });
 }
 
 /**
