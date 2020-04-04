@@ -31,7 +31,6 @@ function login(username, password) {
 
                 // Alert the user of the error
                 dispatch(alertActions.error(`Error: ${error}`));
-                setTimeout(() => dispatch(alertActions.clear()), 5000);
             });
     }
 }
@@ -56,19 +55,29 @@ function register(user) {
             .then((registeredUser) => {
                 dispatch(success(registeredUser));
 
+                const status = 'Registration successful';
+
                 // Alert the user of successful registration
-                dispatch(alertActions.success('Registration successful'));
-                setTimeout(() => dispatch(alertActions.clear()), 5000);
+                dispatch(alertActions.success(status));
 
                 // Redirect to login screen upon successful registration
-                history.push("/login");
+                history.push("/login", { status });
             })
             .catch((error) => {
                 dispatch(failure(error));
 
                 // Alert the user of the error
                 dispatch(alertActions.error(`Error: ${error}`));
-                setTimeout(() => dispatch(alertActions.clear()), 5000);
             });
     }
+}
+
+/**
+ * Dispatches a state change to clear the most recent alert after a timeout.
+ * @param dispatch
+ * @param timeout - milliseconds before alert is cleared
+ * @returns {number} Timer ID
+ */
+function clearAlertTimeout(dispatch, timeout) {
+    return setTimeout(() => dispatch(alertActions.clear()), timeout);
 }
