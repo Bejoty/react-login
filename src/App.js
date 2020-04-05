@@ -19,11 +19,7 @@ export class App extends React.Component {
 
         const { alertClear } = this.props;
         history.listen((location, action) => {
-            const keepAlert = location.pathname === '/login' &&
-                !!location.state && location.state.status === 'Registration successful';
-            if (!keepAlert) {
-                alertClear();
-            }
+            alertClear();
         });
     }
 

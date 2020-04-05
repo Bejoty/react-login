@@ -54,11 +54,11 @@ function register(user) {
 
                 const status = 'Registration successful';
 
-                // Alert the user of successful registration
-                dispatch(alertActions.success(status));
-
                 // Redirect to login screen upon successful registration
                 history.push("/login", { status });
+
+                // Alert the user of successful registration
+                dispatch(alertActions.success(status));
             })
             .catch((error) => {
                 dispatch(failure(error));
