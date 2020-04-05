@@ -96,7 +96,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        register: (user) => userActions.register(user)(dispatch),
+        register: (user) => dispatch(userActions.register(user)),
     }
 }
 

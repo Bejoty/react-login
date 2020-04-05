@@ -91,7 +91,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        login: (username, password) => userActions.login(username, password)(dispatch),
+        login: (username, password) => dispatch(userActions.login(username, password)),
         logout: () => dispatch(userActions.logout()),
     }
 }
