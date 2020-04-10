@@ -12,6 +12,8 @@ import {spy} from 'sinon';
 configure({ adapter: new Adapter() });
 
 beforeEach(function() {
+  localStorage.clear();
+
   global.fetch = jest.fn().mockImplementation((username, password) => {
       var p = new Promise((resolve, reject) => {
         resolve({
@@ -28,16 +30,18 @@ beforeEach(function() {
 
 describe("Test User service", () => {
   it('check if a fetch promise is returned and localStorage is used in login', async () => {
-    spy(localStorage, "setItem");
+    // spy(localStorage, "setItem");
     let res = await userService.login("username321", "password321");
     //login successful
+    expect(localStorage.setItem).toHaveBeenCalled();
     expect(res.username).toEqual("username321");
-    expect(localStorage.setItem.called).toEqual(true);
+    // expect(localStorage.setItem.called).toEqual(true);
   });
 
   it('check if logout removes `user` item from localStorage', () => {
-    spy(localStorage, "removeItem");
+    // spy(localStorage, "removeItem");
     userService.logout();
-    expect(localStorage.removeItem.called).toEqual(true);
+    expect(localStorage.removeItem).toHaveBeenCalled();
+    // expect(localStorage.removeItem.called).toEqual(true);
   });
 });
