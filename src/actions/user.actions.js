@@ -52,13 +52,11 @@ function register(user) {
             .then((registeredUser) => {
                 dispatch(success(registeredUser));
 
-                const status = 'Registration successful';
-
-                // Redirect to login screen upon successful registration
-                history.push("/login", { status });
+                // Redirect to login screen
+                history.push("/login");
 
                 // Alert the user of successful registration
-                dispatch(alertActions.success(status));
+                dispatch(alertActions.success('Registration successful'));
             })
             .catch((error) => {
                 dispatch(failure(error));
