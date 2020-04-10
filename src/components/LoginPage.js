@@ -11,7 +11,8 @@ export class LoginPage extends Component {
         super(props);
 
         // reset login status
-        this.props.logout();
+        const { logout } = this.props;
+        logout && logout();
 
         this.state = {
             username: '',
@@ -64,7 +65,7 @@ export class LoginPage extends Component {
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className="form-control password"
                             name="password"
                             onChange={this.handleChange}
                         />
@@ -73,7 +74,7 @@ export class LoginPage extends Component {
                         }
                     </div>
                     <div className="form-group">
-                        <LoadingButton text="Login" isLoading={Boolean(authentication.loggingIn)} />
+                        <LoadingButton text="Login" isLoading={authentication && authentication.loggingIn} />
                         <Link to="/register" className="btn btn-link">Register</Link>
                     </div>
                 </form>

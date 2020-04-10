@@ -68,7 +68,7 @@ export class RegisterPage extends Component {
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
-                            className="form-control"
+                            className="form-control password"
                             name="password"
                             onChange={this.handleChange}
                         />
@@ -77,7 +77,7 @@ export class RegisterPage extends Component {
                         }
                     </div>
                     <div className="form-group">
-                        <LoadingButton text="Register" isLoading={Boolean(registration.registering)} />
+                        <LoadingButton text="Register" isLoading={registration && registration.registering} />
                         <Link to="/login" className="btn btn-link">Cancel</Link>
                     </div>
                 </form>

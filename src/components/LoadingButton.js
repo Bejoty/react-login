@@ -14,7 +14,7 @@ const LoadingButton = ({ text, isLoading }) => {
 
 LoadingButton.propTypes = {
     text: PropTypes.string.isRequired,
-    isLoading: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool,
 };
 
 export default LoadingButton;

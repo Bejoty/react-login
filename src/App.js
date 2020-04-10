@@ -17,9 +17,10 @@ export class App extends React.Component {
     constructor(props) {
         super(props);
 
-        const { alertClear } = this.props;
+        // Remove any alerts when the user navigates to a new page
+        const { dispatch } = this.props;
         history.listen((location, action) => {
-            alertClear();
+            dispatch && dispatch(alertActions.clear());
         });
     }
 
@@ -41,10 +42,4 @@ export class App extends React.Component {
     }
 }
 
-function mapDispatchToProps(dispatch) {
-    return {
-        alertClear: () => dispatch(alertActions.clear()),
-    }
-}
-
-export default connect(null, mapDispatchToProps)(App);
+export default connect()(App);
